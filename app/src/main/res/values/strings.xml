@@ -8,7 +8,7 @@
 
     <string name="action_search">Buscar</string>
 
-    <string name="my_curso">Cursos</string>
+    <string name="my_curso">Estudiantes</string>
     <string name="my_profesor">Profesores</string>
 
     <string name="labelACurso">Datos de Curso</string>

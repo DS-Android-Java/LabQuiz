@@ -71,7 +71,7 @@ public class AdaptadorEstudiante extends RecyclerView.Adapter<AdaptadorEstudiant
         holder.titulo1.setText(estudiante.getIdP());
         holder.titulo2.setText(estudiante.getNombre());
         holder.description.setText(estudiante.getApellidos() + " Créditos");
-        holder.profe.setText("   Curso asignado: "+estudiante.getCursosAsignados().getIdC());
+        holder.profe.setText("   Curso asignado: "+estudiante.getCursosAsignados().getIdC() +" "+ estudiante.getCursosAsignados().getDescripcion());
     }
 
     @Override

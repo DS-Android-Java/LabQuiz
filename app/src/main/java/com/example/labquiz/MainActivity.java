@@ -44,11 +44,11 @@ public class MainActivity extends AppCompatActivity
         implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener, AdaptadorEstudiante.AdaptadorEstudianteListener {
 
     //Url listar
-    String apiUrl = "http://192.168.0.3:8080/Backend_LabQuiz/modelos/estudiantemodelos/list?";
+    String apiUrl = "http://192.168.0.6:8080/Backend_LabQuiz/modelos/estudiantemodelos/list?";
     //String apiUrl = "http://10.0.2.2:8080/Backend_JSON/modelos/curso/list";//Esta para emulador
 
     //Url operaciones
-    String apiUrlAcciones = "http://192.168.0.3:8080/Backend_JSON/Controlador/curso?";
+    String apiUrlAcciones = "http://192.168.0.6:8080/Backend_JSON/Controlador/curso?";
     //String apiUrlAcciones = "http://10.0.2.2:8080/Backend_JSON/Controlador/curso?";//Esta para emulador
 
     String apiUrlTemp;
@@ -78,9 +78,9 @@ public class MainActivity extends AppCompatActivity
         mRecyclerView = findViewById(R.id.recycler_estudiantesFld);
         estudianteList = new ArrayList<>();
         //model = ModelData.getInstance();
-        //cursoList = model.getListaCurso();
-        //mAdapter = new AdaptadorCurso(cursoList, this);
-        /*coordinatorLayout = findViewById(R.id.coordinator_layoutC);
+        estudianteList = new ArrayList<>();
+        mAdapter = new AdaptadorEstudiante(estudianteList, this);
+        coordinatorLayout = findViewById(R.id.coordinator_layoutC);
 
         // white background notification bar
         whiteNotificationBar(mRecyclerView);
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        mRecyclerView.setAdapter(mAdapter);*/
+        mRecyclerView.setAdapter(mAdapter);
 
         //AsyncTask aca se usa el web service para cargar los datos de la base del profesor
         MyAsyncTasksCursoOperaciones myAsyncTasksOC = new MyAsyncTasksCursoOperaciones();
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity
         checkIntentInformation();
 
         //refresh view
-        //mAdapter.notifyDataSetChanged();
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -237,10 +237,6 @@ public class MainActivity extends AppCompatActivity
                 mRecyclerView.addItemDecoration(new DividerItemDecoration(MainActivity.this, DividerItemDecoration.VERTICAL));
                 mRecyclerView.setAdapter(mAdapter);
 
-                //Y se recarga la lista de profesores
-                /*apiUrlTemp = apiUrl;
-                MyAsyncTasksCurso myAsyncTasksC = new MyAsyncTasksCurso();
-                myAsyncTasksC.execute();*/
             }catch (Exception e){
                 e.printStackTrace();
             }

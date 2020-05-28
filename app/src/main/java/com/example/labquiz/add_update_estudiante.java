@@ -41,8 +41,7 @@ public class add_update_estudiante extends AppCompatActivity {
     private List<Curso> cursos;
 
     //Url cargar combo carreras
-    String apiUrlCargaComboCurso = "http://192.168.0.3:8080/Backend_LabQuiz/Curso/List?";
-    //String apiUrlCargaComboCarrera = "";//Esta para emulador
+    String apiUrlCargaComboCurso = "http://192.168.0.6:8080/Backend_LabQuiz/Curso/List?";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +111,7 @@ public class add_update_estudiante extends AppCompatActivity {
         int ancho = medidasVentana.widthPixels;
         int alto = medidasVentana.heightPixels;
 
-        getWindow().setLayout((int)(ancho * 0.90), (int)(alto * 0.80));
+        getWindow().setLayout((int)(ancho * 0.90), (int)(alto * 0.60));
     }
 
     public void addCurso() {

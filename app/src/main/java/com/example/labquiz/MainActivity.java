@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity
     //String apiUrl = "http://10.0.2.2:8080/Backend_JSON/modelos/curso/list";//Esta para emulador
 
     //Url operaciones
-    String apiUrlAcciones = "http://192.168.0.6:8080/Backend_JSON/Controlador/curso?";
+    String apiUrlAcciones = "http://192.168.0.6:8080/Backend_LabQuiz/Estudiante/Operaciones?";
     //String apiUrlAcciones = "http://10.0.2.2:8080/Backend_JSON/Controlador/curso?";//Esta para emulador
 
     String apiUrlTemp;
@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbarC);
         setSupportActionBar(toolbar);
-        //model = ModelData.getInstance();
         apiUrlTemp = apiUrl;
 
         //toolbar fancy stuff
@@ -77,7 +76,6 @@ public class MainActivity extends AppCompatActivity
 
         mRecyclerView = findViewById(R.id.recycler_estudiantesFld);
         estudianteList = new ArrayList<>();
-        //model = ModelData.getInstance();
         estudianteList = new ArrayList<>();
         mAdapter = new AdaptadorEstudiante(estudianteList, this);
         coordinatorLayout = findViewById(R.id.coordinator_layoutC);
@@ -343,7 +341,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void goToAddUpdCurso() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, add_update_estudiante.class);
         intent.putExtra("editable", false);
         startActivity(intent);
     }

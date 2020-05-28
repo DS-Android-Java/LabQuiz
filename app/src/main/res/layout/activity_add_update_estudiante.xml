@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".add_update_estudiante">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <TextView
+            android:id="@+id/labelACurso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/labelACurso"
+            android:textSize="18sp"
+            android:textStyle="normal|bold" />
+
+        <EditText
+            android:id="@+id/etCodigo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="28dp"
+            android:ems="10"
+            android:hint="@string/etCodigo"
+            android:inputType="textPersonName"
+            app:layout_constraintStart_toEndOf="@+id/tvCodigo"
+            app:layout_constraintTop_toBottomOf="@+id/tvTituloUpdateCurso" />
+
+        <EditText
+            android:id="@+id/etNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:ems="10"
+            android:hint="@string/etNombre"
+            android:inputType="textPersonName"
+            app:layout_constraintStart_toEndOf="@+id/tvNombre"
+            app:layout_constraintTop_toBottomOf="@+id/etCodigo" />
+
+        <EditText
+            android:id="@+id/etCreditos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:ems="10"
+            android:hint="@string/etCreditos"
+            android:inputType="textPersonName"
+            app:layout_constraintStart_toEndOf="@+id/tvCreditos"
+            app:layout_constraintTop_toBottomOf="@+id/etNombre" />
+
+
+        <EditText
+            android:id="@+id/etHorasSemanales"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:ems="10"
+            android:hint="@string/etEdad"
+            android:inputType="number"
+            app:layout_constraintStart_toEndOf="@+id/tvHorasSemanales"
+            app:layout_constraintTop_toBottomOf="@+id/etCiclo" />
+
+        <Spinner
+            android:id="@+id/spinnerCurso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addUpdCursoBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_check"
+            android:tint="@android:color/background_light"
+            app:backgroundTint="@color/bg_row_background"
+            tools:layout_editor_absoluteX="319dp"
+            tools:layout_editor_absoluteY="547dp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

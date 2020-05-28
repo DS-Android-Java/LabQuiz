@@ -1,3 +1,35 @@
 <resources>
     <string name="app_name">LabQuiz</string>
+
+    <string name="preference_user_key">com.example.lab03</string>
+    <string name="preference_user_key_default">none</string>
+
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="action_search">Buscar</string>
+
+    <string name="my_curso">Cursos</string>
+    <string name="my_profesor">Profesores</string>
+
+    <string name="labelACurso">Datos de Curso</string>
+    <string name="labelAProfesor">Datos de Profesor</string>
+
+    <string name="edit">Editar</string>
+    <string name="delete">Eliminar</string>
+
+    <!--Formulario Update Curso-->
+    <string name="tvTituloUpdateCurso">Actualización Curso</string>
+    <string name="tvCodigo">Id:</string>
+    <string name="tvCodCarrera">Código de Carrera:</string>
+    <string name="tvNombre">Nombre:</string>
+    <string name="tvCreditos">Apellidos: </string>
+    <string name="tvAnio">Año:</string>
+    <string name="tvCiclo">Ciclo:</string>
+    <string name="tvHorasSemanales">Horas semanales:</string>
+    <string name="tvProfesor">Profesor:</string>
+    <string name="etEdad">Edad</string>
+
+    <string name="etCodigo">Ced</string>
+    <string name="etNombre">Nombre</string>
+    <string name="etCreditos">Apellidos</string>
 </resources>

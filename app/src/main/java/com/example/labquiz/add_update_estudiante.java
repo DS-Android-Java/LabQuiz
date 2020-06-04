@@ -41,7 +41,7 @@ public class add_update_estudiante extends AppCompatActivity {
     private List<Curso> cursos;
 
     //Url cargar combo carreras
-    String apiUrlCargaComboCurso = "http://192.168.0.6:8080/Backend_LabQuiz/Curso/List?";
+    //String apiUrlCargaComboCurso = "http://192.168.0.6:8080/Backend_LabQuiz/Curso/List?";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +64,8 @@ public class add_update_estudiante extends AppCompatActivity {
         etHorasSemanales.setText("");
 
         //Cargando spinners o combos
-        MyAsyncTasksCargaComboCarreras myAsyncTasksCCCarreras = new MyAsyncTasksCargaComboCarreras();
-        myAsyncTasksCCCarreras.execute();
-
+        //MyAsyncTasksCargaComboCarreras myAsyncTasksCCCarreras = new MyAsyncTasksCargaComboCarreras();
+        //myAsyncTasksCCCarreras.execute();
 
         //Cargado spinners o combos
         spinnerCurso = findViewById(R.id.spinnerCurso);
@@ -188,7 +187,7 @@ public class add_update_estudiante extends AppCompatActivity {
         }
         return true;
     }
-
+/*
     public class MyAsyncTasksCargaComboCarreras extends AsyncTask<String, String, String> {
 
         @Override
@@ -264,6 +263,6 @@ public class add_update_estudiante extends AppCompatActivity {
             }
         }
     }
-
+*/
 }
 

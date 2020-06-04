@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.example.labquiz.adaptador.AdaptadorEstudiante;
 import com.example.labquiz.helper.RecyclerItemTouchHelper;
 import com.example.labquiz.logicaNegocio.Estudiante;
+import com.example.labquiz.model.Modelo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -44,23 +45,23 @@ public class MainActivity extends AppCompatActivity
         implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener, AdaptadorEstudiante.AdaptadorEstudianteListener {
 
     //Url listar
-    String apiUrl = "http://192.168.0.6:8080/Backend_LabQuiz/modelos/estudiantemodelos/list?";
+    //String apiUrl = "http://192.168.0.6:8080/Backend_LabQuiz/modelos/estudiantemodelos/list?";
     //String apiUrl = "http://10.0.2.2:8080/Backend_JSON/modelos/curso/list";//Esta para emulador
 
     //Url operaciones
-    String apiUrlAcciones = "http://192.168.0.6:8080/Backend_LabQuiz/Estudiante/Operaciones?";
+    //String apiUrlAcciones = "http://192.168.0.6:8080/Backend_LabQuiz/Estudiante/Operaciones?";
     //String apiUrlAcciones = "http://10.0.2.2:8080/Backend_JSON/Controlador/curso?";//Esta para emulador
 
-    String apiUrlTemp;
+    //String apiUrlTemp;
 
     private RecyclerView mRecyclerView;
     private AdaptadorEstudiante mAdapter;
-    private List<Estudiante> estudianteList;
+    private ArrayList<Estudiante> estudianteList;
     private CoordinatorLayout coordinatorLayout;
     private SearchView searchView;
     private FloatingActionButton fab;
     ProgressDialog progressDialog;
-    //private ModelData model;
+    private Modelo model;
 
 
     @Override
@@ -69,14 +70,14 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbarC);
         setSupportActionBar(toolbar);
-        apiUrlTemp = apiUrl;
 
         //toolbar fancy stuff
         getSupportActionBar().setTitle(getString(R.string.my_curso));
 
+        model = Modelo.getIntance();
         mRecyclerView = findViewById(R.id.recycler_estudiantesFld);
         estudianteList = new ArrayList<>();
-        estudianteList = new ArrayList<>();
+        estudianteList = model.listEstudiantes(this);
         mAdapter = new AdaptadorEstudiante(estudianteList, this);
         coordinatorLayout = findViewById(R.id.coordinator_layoutC);
 
@@ -88,10 +89,6 @@ public class MainActivity extends AppCompatActivity
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         mRecyclerView.setAdapter(mAdapter);
-
-        //AsyncTask aca se usa el web service para cargar los datos de la base del profesor
-        MyAsyncTasksCursoOperaciones myAsyncTasksOC = new MyAsyncTasksCursoOperaciones();
-        myAsyncTasksOC.execute();
 
         // go to update or add career
         fab = findViewById(R.id.addBtnC);
@@ -123,10 +120,10 @@ public class MainActivity extends AppCompatActivity
                 String name = estudianteList.get(viewHolder.getAdapterPosition()).getNombre();
                 String idCurso = estudianteList.get(viewHolder.getAdapterPosition()).getIdP();
 
-                apiUrlTemp = apiUrlAcciones + "acc=deleteE"+ "&id_Estudiante=" + idCurso;
+                //apiUrlTemp = apiUrlAcciones + "acc=deleteE"+ "&id_Estudiante=" + idCurso;
 
-                MyAsyncTasksCursoOperaciones myAsyncTasksCursoOperaciones = new MyAsyncTasksCursoOperaciones();
-                myAsyncTasksCursoOperaciones.execute();
+                //MyAsyncTasksCursoOperaciones myAsyncTasksCursoOperaciones = new MyAsyncTasksCursoOperaciones();
+                //myAsyncTasksCursoOperaciones.execute();
 
                 // save the index deleted
                 final int deletedIndex = viewHolder.getAdapterPosition();
@@ -144,103 +141,6 @@ public class MainActivity extends AppCompatActivity
             mAdapter.notifyDataSetChanged(); //restart left swipe view
             startActivity(intent);
         }
-    }
-
-    public class MyAsyncTasksCursoOperaciones extends AsyncTask<String, String, String> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // display a progress dialog for good user experiance
-            /*progressDialog = new ProgressDialog(MantenimientoProfesorActivity.this);
-            progressDialog.setMessage("Please Wait");
-            progressDialog.setCancelable(false);
-            progressDialog.show();*/
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            // implement API in background and store the response in current variable
-            String current = "";
-
-
-            try {
-                URL url;
-                HttpURLConnection urlConnection = null;
-                try {
-                    url = new URL(apiUrlTemp);
-
-                    urlConnection = (HttpURLConnection) url.openConnection();
-
-                    InputStream in = urlConnection.getInputStream();
-
-                    InputStreamReader isw = new InputStreamReader(in);
-
-                    int data = isw.read();
-                    while (data != -1) {
-                        current += (char) data;
-                        data = isw.read();
-                    }
-
-                    // return the data to onPostExecute method
-                    Log.w("JSON",current);
-                    return current;
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    if (urlConnection != null) {
-                        urlConnection.disconnect();
-                    }
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                return "Exception: " + e.getMessage();
-            }
-            return current;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            // dismiss the progress dialog after receiving data from API
-            //progressDialog.dismiss();
-
-            //Json
-            try{
-                Gson gson = new Gson();
-
-                JSONObject jsonObjectMensaje = new JSONObject(s);
-                boolean estado = jsonObjectMensaje.getBoolean("error");
-                String mensaje = jsonObjectMensaje.getString("mensaje");
-                String listC = jsonObjectMensaje.getString("listEst");
-                //Se muestra el mensaje de estado de operacion
-                Toast.makeText(MainActivity.this,mensaje,Toast.LENGTH_LONG).show();
-
-                estudianteList = (ArrayList<Estudiante>) gson.fromJson(listC,
-                        new TypeToken<ArrayList<Estudiante>>() {
-                        }.getType());
-
-                mAdapter = new AdaptadorEstudiante(estudianteList, MainActivity.this);
-                coordinatorLayout = findViewById(R.id.coordinator_layoutC);
-
-                //white background notification bar
-                whiteNotificationBar(mRecyclerView);
-                Log.d("dataEstudiantesssss", listC);
-
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-                mRecyclerView.setLayoutManager(mLayoutManager);
-                mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                mRecyclerView.addItemDecoration(new DividerItemDecoration(MainActivity.this, DividerItemDecoration.VERTICAL));
-                mRecyclerView.setAdapter(mAdapter);
-
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-            Log.d("JSONMENSAJE",s);
-        }
-
     }
 
     @Override
@@ -324,18 +224,18 @@ public class MainActivity extends AppCompatActivity
                     String cursoU = "";
                     cursoU = gson.toJson(aux);
 
-                    apiUrlTemp = apiUrlAcciones+"acc=updateE" +"&estudianteU="+cursoU +"&curso_id="+aux.getCursosAsignados().getIdC();
-                    MyAsyncTasksCursoOperaciones myAsyncTasksOp = new MyAsyncTasksCursoOperaciones();
-                    myAsyncTasksOp.execute();
+                    //apiUrlTemp = apiUrlAcciones+"acc=updateE" +"&estudianteU="+cursoU +"&curso_id="+aux.getCursosAsignados().getIdC();
+                    //MyAsyncTasksCursoOperaciones myAsyncTasksOp = new MyAsyncTasksCursoOperaciones();
+                    //myAsyncTasksOp.execute();
                 }
             } else {//Accion de agregar
                 //found a new Curso Object
                 String cursoA = "";
                 cursoA = gson.toJson(aux);
 
-                apiUrlTemp = apiUrlAcciones+"acc=addE" +"&estudianteA="+cursoA +"&curso_id="+aux.getCursosAsignados().getIdC();
-                MyAsyncTasksCursoOperaciones myAsyncTasksOp = new MyAsyncTasksCursoOperaciones();
-                myAsyncTasksOp.execute();
+                //apiUrlTemp = apiUrlAcciones+"acc=addE" +"&estudianteA="+cursoA +"&curso_id="+aux.getCursosAsignados().getIdC();
+                //MyAsyncTasksCursoOperaciones myAsyncTasksOp = new MyAsyncTasksCursoOperaciones();
+                //myAsyncTasksOp.execute();
             }
         }
     }

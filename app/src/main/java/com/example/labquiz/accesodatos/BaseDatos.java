@@ -29,15 +29,27 @@ public class BaseDatos extends SQLiteOpenHelper {
         db.execSQL( "insert into Estudiante(id, nombre, apellidos,edad) values ('623929292', 'Allison','Madriz Valverde', '25');" );
         db.execSQL( "insert into Estudiante(id, nombre, apellidos,edad) values ('202700678', 'Vanessa','Perez Cruz','43' );" );
 
-        /*db.execSQL("create table semana(idSemana int primary key AUTOINCREMENT, fechaInicio text, fechaFinal text," +
-                " horasLaboradasFinal real , salario real ,estado text , adelanto real)");*/
+        db.execSQL("create table Cursos("
+            +"id_c text,"+"descripcion text," +"creditos text);");
 
-        //execSQL("create table tblAMIGO(" + " recIDinteger PRIMARY KEY autoincrement, " + " name text, "+ " phone text ); " );
+        db.execSQL("insert into Cursos(id_c, descripcion,creditos) values ('EIF204','Dispositivos Moviles','8');" );
+        db.execSQL("insert into Cursos(id_c, descripcion,creditos) values ('EIF205','Bases de Datos','4');" );
+        db.execSQL("insert into Cursos(id_c, descripcion,creditos) values ('EIF206','Ingenieria I','3');" );
+
+        db.execSQL("create table Asignacion("
+                + "fk_id_e text,"+"fk_id_c text," +"FOREIGN KEY(fk_id_c) REFERENCES Cursos(id_c),"+
+                "FOREIGN KEY(fk_id_e) REFERENCES Estudiante(id));");
+
+        db.execSQL("insert into Asignacion(fk_id_e, fk_id_c) values ('207830003','EIF204');");
+        db.execSQL("insert into Asignacion(fk_id_e, fk_id_c) values ('623929292','EIF205');");
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + "Estudiante");
+        db.execSQL("DROP TABLE IF EXISTS " + "Cursos");
+        db.execSQL("DROP TABLE IF EXISTS " + "Asginacion");
         onCreate(db);
     }
 

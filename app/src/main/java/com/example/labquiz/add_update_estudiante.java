@@ -2,6 +2,7 @@ package com.example.labquiz;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.labquiz.logicaNegocio.Curso;
 import com.example.labquiz.logicaNegocio.Estudiante;
+import com.example.labquiz.model.Modelo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -39,6 +41,7 @@ public class add_update_estudiante extends AppCompatActivity {
     ArrayAdapter<Curso> adaptadorC;
 
     private List<Curso> cursos;
+    private Modelo model;
 
     //Url cargar combo carreras
     //String apiUrlCargaComboCurso = "http://192.168.0.6:8080/Backend_LabQuiz/Curso/List?";
@@ -63,14 +66,16 @@ public class add_update_estudiante extends AppCompatActivity {
         etCreditos.setText("");
         etHorasSemanales.setText("");
 
-        //Cargando spinners o combos
-        //MyAsyncTasksCargaComboCarreras myAsyncTasksCCCarreras = new MyAsyncTasksCargaComboCarreras();
-        //myAsyncTasksCCCarreras.execute();
+        model = Modelo.getIntance();
 
         //Cargado spinners o combos
         spinnerCurso = findViewById(R.id.spinnerCurso);
         cursos = new ArrayList<>();
-        ////////////////////
+        cursos = model.listCurso(this);
+
+        adaptadorC = new ArrayAdapter<Curso>(this, R.layout.spinner_curso,cursos);
+        spinnerCurso.setAdapter(adaptadorC);
+      ////////////////////
 
         //receiving data from admCursoActivity
         Bundle extras = getIntent().getExtras();
@@ -187,82 +192,5 @@ public class add_update_estudiante extends AppCompatActivity {
         }
         return true;
     }
-/*
-    public class MyAsyncTasksCargaComboCarreras extends AsyncTask<String, String, String> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            // implement API in background and store the response in current variable
-            String current = "";
-
-            try {
-                URL url;
-                HttpURLConnection urlConnection = null;
-                try {
-                    url = new URL(apiUrlCargaComboCurso);
-
-                    urlConnection = (HttpURLConnection) url.openConnection();
-
-                    ////
-                    urlConnection.setRequestMethod("GET"); // or POST
-                    urlConnection.setDoInput(true);
-                    urlConnection.setDoOutput(true);
-                    ////
-                    InputStream in = urlConnection.getInputStream();
-
-                    InputStreamReader isw = new InputStreamReader(in);
-
-                    int data = isw.read();
-                    while (data != -1) {
-                        current += (char) data;
-                        data = isw.read();
-                        //System.out.print(current);
-                    }
-                    // return the data to onPostExecute method
-                    Log.w("JSON", current);
-                    return current;
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    if (urlConnection != null) {
-                        urlConnection.disconnect();
-                    }
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                return "Exception: " + e.getMessage();
-            }
-            return current;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-
-            String jsonObjectAsString = s;
-
-            //Json
-            try {
-                Gson gson = new Gson();
-
-                cursos = (ArrayList<Curso>) gson.fromJson(s,
-                        new TypeToken<ArrayList<Curso>>() {
-                        }.getType());
-
-                adaptadorC = new ArrayAdapter<Curso>(add_update_estudiante.this, R.layout.support_simple_spinner_dropdown_item, cursos);
-                spinnerCurso.setAdapter(adaptadorC);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-*/
 }
 

@@ -47,6 +47,10 @@ public class Modelo {
         return miSE.deleteEstudiante(idEst,context);
     }
 
+    public ArrayList<Curso> listCursoByEstudent(Context context,String id){
+        return miSC.listCursoByEstudent(context,id);
+    }
+
     public ArrayList<Curso> listCurso(Context context){
         misCursos = miSC.listarCurso(context);
         return  misCursos;

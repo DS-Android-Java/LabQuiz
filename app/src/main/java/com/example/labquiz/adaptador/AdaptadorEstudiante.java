@@ -1,5 +1,6 @@
 package com.example.labquiz.adaptador;
 
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,7 @@ public class AdaptadorEstudiante extends RecyclerView.Adapter<AdaptadorEstudiant
     private AdaptadorEstudianteListener listener;
     private Estudiante deletedItem;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
         public TextView titulo1, titulo2, description,profe;
         //two layers
         public RelativeLayout viewForeground, viewBackgroundDelete, viewBackgroundEdit;
@@ -46,6 +47,11 @@ public class AdaptadorEstudiante extends RecyclerView.Adapter<AdaptadorEstudiant
                     listener.onContactSelected(estudianteListFiltered.get(getAdapterPosition()));
                 }
             });
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+
         }
     }
 

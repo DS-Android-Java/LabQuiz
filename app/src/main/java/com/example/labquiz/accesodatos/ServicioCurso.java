@@ -67,6 +67,29 @@ public class ServicioCurso {
         return misCursos;
     }
 
+    public ArrayList<Curso> listCursoByEstudent(Context context,String id){
+        ArrayList<Curso>misC = new ArrayList<>();
+        BaseDatos conexion = new BaseDatos(context);//Aca se abre la conexion
+        db = conexion.getWritableDatabase();
+        Curso curso;
+
+        Cursor fila = db.rawQuery("select id_c,descripcion,creditos from Cursos C " +
+                "inner join Asignacion A ON C.id_c = A.fk_id_c " +
+                "inner join Estudiante E ON A.fk_id_e = E.id " +
+                "where E.id = '"+id+"';", null);
+
+        while(fila.moveToNext()) {
+            curso = new Curso();
+            curso.setIdC(fila.getString(0));
+            curso.setDescripcion(fila.getString(1));
+            curso.setCreditos(fila.getString(2));
+
+            misC.add(curso);
+        }
+        conexion.close();//Aca se cierra
+        return misC;
+    }
+
     public  void close(){
         db.close();
     }

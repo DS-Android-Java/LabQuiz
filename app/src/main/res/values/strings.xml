@@ -16,6 +16,8 @@
 
     <string name="edit">Editar</string>
     <string name="delete">Eliminar</string>
+    <string name="actionConsulta">Consultar Cursos asignados</string>
+    <string name="actionAsignar">Asignar Cursos</string>
 
     <!--Formulario Update Curso-->
     <string name="tvTituloUpdateCurso">Actualización Curso</string>

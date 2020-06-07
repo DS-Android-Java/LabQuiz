@@ -42,6 +42,8 @@ public class BaseDatos extends SQLiteOpenHelper {
                 "FOREIGN KEY(fk_id_e) REFERENCES Estudiante(id));");
 
         db.execSQL("insert into Asignacion(fk_id_e, fk_id_c) values ('207830003','EIF204');");
+        db.execSQL("insert into Asignacion(fk_id_e, fk_id_c) values ('207830003','EIF205');");
+        db.execSQL("insert into Asignacion(fk_id_e, fk_id_c) values ('207830003','EIF206');");
         db.execSQL("insert into Asignacion(fk_id_e, fk_id_c) values ('623929292','EIF205');");
     }
 

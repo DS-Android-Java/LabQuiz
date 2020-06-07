@@ -1,5 +1,6 @@
 package com.example.labquiz;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
@@ -19,9 +20,13 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.labquiz.adaptador.AdaptadorEstudiante;
@@ -88,6 +93,8 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        //Registro de controles de menus contextuales
+        registerForContextMenu(mRecyclerView);
         //delete swiping left and right
         ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, this);
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(mRecyclerView);
@@ -99,6 +106,34 @@ public class MainActivity extends AppCompatActivity
 
         //refresh view
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+
+        int id=v.getId();
+        switch (id){
+            case R.id.recycler_estudiantesFld:
+                inflater.inflate(R.menu.menu_contextual_est,menu);
+                break;
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        switch (item.getItemId()){
+            case R.id.actionConsulta:
+                Toast.makeText(this,"Elemento seleccionado: "+ info.position+ item.getTitle(),Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.actionAsignar:
+                Toast.makeText(this,"Asignar",Toast.LENGTH_LONG).show();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 
     @Override
@@ -197,6 +232,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onContactSelected(Estudiante estudiante) { //TODO get the select item of recycleView
+        Intent intent = new Intent(this, ListCursosAsignados.class);
+        intent.putExtra("idEstudiante", estudiante);
+        startActivity(intent);
         Toast.makeText(getApplicationContext(), "Selected: " + estudiante.getIdP() + ", " + estudiante.getNombre(), Toast.LENGTH_LONG).show();
     }
 

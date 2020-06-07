@@ -44,23 +44,12 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener, AdaptadorEstudiante.AdaptadorEstudianteListener {
 
-    //Url listar
-    //String apiUrl = "http://192.168.0.6:8080/Backend_LabQuiz/modelos/estudiantemodelos/list?";
-    //String apiUrl = "http://10.0.2.2:8080/Backend_JSON/modelos/curso/list";//Esta para emulador
-
-    //Url operaciones
-    //String apiUrlAcciones = "http://192.168.0.6:8080/Backend_LabQuiz/Estudiante/Operaciones?";
-    //String apiUrlAcciones = "http://10.0.2.2:8080/Backend_JSON/Controlador/curso?";//Esta para emulador
-
-    //String apiUrlTemp;
-
     private RecyclerView mRecyclerView;
     private AdaptadorEstudiante mAdapter;
     private ArrayList<Estudiante> estudianteList;
     private CoordinatorLayout coordinatorLayout;
     private SearchView searchView;
     private FloatingActionButton fab;
-    ProgressDialog progressDialog;
     private Modelo model;
 
 
@@ -77,7 +66,7 @@ public class MainActivity extends AppCompatActivity
         model = Modelo.getIntance();
         mRecyclerView = findViewById(R.id.recycler_estudiantesFld);
         estudianteList = new ArrayList<>();
-        estudianteList = model.listEstudiantes(this);
+        estudianteList = model.listEstudiantes(this);//Aca se cargan los estudiantes de la base
         mAdapter = new AdaptadorEstudiante(estudianteList, this);
         coordinatorLayout = findViewById(R.id.coordinator_layoutC);
 
@@ -117,19 +106,19 @@ public class MainActivity extends AppCompatActivity
         if (direction == ItemTouchHelper.START) {
             if (viewHolder instanceof AdaptadorEstudiante.MyViewHolder) {
                 // get the removed item name to display it in snack bar
-                String name = estudianteList.get(viewHolder.getAdapterPosition()).getNombre();
-                String idCurso = estudianteList.get(viewHolder.getAdapterPosition()).getIdP();
-
-                //apiUrlTemp = apiUrlAcciones + "acc=deleteE"+ "&id_Estudiante=" + idCurso;
-
-                //MyAsyncTasksCursoOperaciones myAsyncTasksCursoOperaciones = new MyAsyncTasksCursoOperaciones();
-                //myAsyncTasksCursoOperaciones.execute();
+                String idEst = estudianteList.get(viewHolder.getAdapterPosition()).getIdP();
 
                 // save the index deleted
                 final int deletedIndex = viewHolder.getAdapterPosition();
-                // remove the item from recyclerView
-                mAdapter.removeItem(viewHolder.getAdapterPosition());
-
+                //remove from the database
+                int result = model.deleteEstudiante(idEst,this);
+                if(result > 0){
+                    Toast.makeText(this,"Estudiante removido exitosamente!!!" ,Toast.LENGTH_LONG).show();
+                    // remove the item from recyclerView
+                    mAdapter.removeItem(viewHolder.getAdapterPosition());
+                }else {
+                    Toast.makeText(this,"No se puedo eliminar el estudiante!!!",Toast.LENGTH_LONG).show();
+                }
             }
         } else {
             //If is editing a row object
@@ -213,29 +202,21 @@ public class MainActivity extends AppCompatActivity
 
     private void checkIntentInformation() {//Aca se realiza el update y el add en la base
         Bundle extras = getIntent().getExtras();
-        Gson gson = new Gson();
         if (extras != null) {
             Estudiante aux;
             aux = (Estudiante) getIntent().getSerializableExtra("addEstudiante");
             if (aux == null) {
                 aux = (Estudiante) getIntent().getSerializableExtra("editEstudiante");
                 if (aux != null) {//Accion de actualizar
-                    //found an item that can be updated
-                    String cursoU = "";
-                    cursoU = gson.toJson(aux);
 
-                    //apiUrlTemp = apiUrlAcciones+"acc=updateE" +"&estudianteU="+cursoU +"&curso_id="+aux.getCursosAsignados().getIdC();
-                    //MyAsyncTasksCursoOperaciones myAsyncTasksOp = new MyAsyncTasksCursoOperaciones();
-                    //myAsyncTasksOp.execute();
                 }
             } else {//Accion de agregar
-                //found a new Curso Object
-                String cursoA = "";
-                cursoA = gson.toJson(aux);
-
-                //apiUrlTemp = apiUrlAcciones+"acc=addE" +"&estudianteA="+cursoA +"&curso_id="+aux.getCursosAsignados().getIdC();
-                //MyAsyncTasksCursoOperaciones myAsyncTasksOp = new MyAsyncTasksCursoOperaciones();
-                //myAsyncTasksOp.execute();
+                if(model.insertEstudiante(aux,aux.getCursosAsignados().get(0).getIdC(),this)){
+                    estudianteList.add(aux);
+                    Toast.makeText(this,"Estudiante agregado exitosamente!!",Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(this,"Error al agregar el estudiante!!!",Toast.LENGTH_LONG).show();
+                }
             }
         }
     }

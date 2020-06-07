@@ -16,8 +16,9 @@ import java.util.ArrayList;
 
 public class BaseDatos extends SQLiteOpenHelper {
 
-    public BaseDatos(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    final static String tableName = "bdLab10";
+    public BaseDatos(@Nullable Context context) {
+        super(context, tableName, null, 1);
     }
 
     @Override
@@ -42,7 +43,6 @@ public class BaseDatos extends SQLiteOpenHelper {
 
         db.execSQL("insert into Asignacion(fk_id_e, fk_id_c) values ('207830003','EIF204');");
         db.execSQL("insert into Asignacion(fk_id_e, fk_id_c) values ('623929292','EIF205');");
-
     }
 
     @Override
@@ -52,6 +52,4 @@ public class BaseDatos extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + "Asginacion");
         onCreate(db);
     }
-
-
 }

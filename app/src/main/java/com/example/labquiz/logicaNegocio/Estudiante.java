@@ -8,9 +8,10 @@ public class Estudiante implements Serializable {
     private String nombre;
     private String apellidos;
     private String edad;
-    private Curso cursosAsignados;
+    //private Curso cursosAsignados;
+    private ArrayList<Curso> cursosAsignados;
 
-    public Estudiante(String idP, String nombre, String apellidos, String edad, Curso cursosAsignados) {
+    public Estudiante(String idP, String nombre, String apellidos, String edad, ArrayList<Curso> cursosAsignados){//Curso cursosAsignados) {
         this.idP = idP;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -23,7 +24,7 @@ public class Estudiante implements Serializable {
         this.nombre = new String();
         this.apellidos = new String();
         this.edad = new String();
-        this.cursosAsignados = new Curso();
+        this.cursosAsignados = new ArrayList<>();
     }
 
     public String getIdP() {
@@ -58,11 +59,11 @@ public class Estudiante implements Serializable {
         this.edad = edad;
     }
 
-    public Curso getCursosAsignados() {
+    public ArrayList<Curso> getCursosAsignados() {
         return cursosAsignados;
     }
 
-    public void setCursosAsignados(Curso cursosAsignados) {
+    public void setCursosAsignados(ArrayList<Curso> cursosAsignados) {
         this.cursosAsignados = cursosAsignados;
     }
 

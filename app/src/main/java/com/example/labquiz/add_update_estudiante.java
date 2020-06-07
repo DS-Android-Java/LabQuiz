@@ -94,7 +94,7 @@ public class add_update_estudiante extends AppCompatActivity {
                 fBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        editCurso();
+                        editEstudiante();
                     }
                 });
             } else {         // is adding new Carrera object
@@ -102,7 +102,7 @@ public class add_update_estudiante extends AppCompatActivity {
                 fBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        addCurso();
+                        addEstudiante();
                     }
                 });
             }
@@ -118,12 +118,12 @@ public class add_update_estudiante extends AppCompatActivity {
         getWindow().setLayout((int)(ancho * 0.90), (int)(alto * 0.60));
     }
 
-    public void addCurso() {
+    public void addEstudiante() {
         if (validateForm()) {
             //do something
             Curso curs = new Curso();
-
             ArrayList<Curso> miC = new ArrayList<>();
+
             curs = ((Curso) spinnerCurso.getSelectedItem());
             System.out.println("Curso data:" + curs.getDescripcion() + " Cod: " + curs.getIdC());
             miC.add(curs);
@@ -133,7 +133,7 @@ public class add_update_estudiante extends AppCompatActivity {
                     etNombre.getText().toString(),
                     etCreditos.getText().toString(),
                     etHorasSemanales.getText().toString(),
-                    curs);
+                    miC);
 
             Intent intent = new Intent(getBaseContext(), MainActivity.class);
             //sending curso data
@@ -143,7 +143,7 @@ public class add_update_estudiante extends AppCompatActivity {
         }
     }
 
-    public void editCurso() {//Funcion para editar en la base y en la lista que muestra en la Recycler View
+    public void editEstudiante() {//Funcion para editar en la base y en la lista que muestra en la Recycler View
         if (validateForm()) {
 
             Curso curs = new Curso();
@@ -158,7 +158,7 @@ public class add_update_estudiante extends AppCompatActivity {
                     etNombre.getText().toString(),
                     etCreditos.getText().toString(),
                     etHorasSemanales.getText().toString(),
-                    curs);
+                    miC);
 
             Intent intent = new Intent(getBaseContext(), MainActivity.class);
             //sending curso data

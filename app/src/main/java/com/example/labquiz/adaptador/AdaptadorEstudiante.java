@@ -70,8 +70,8 @@ public class AdaptadorEstudiante extends RecyclerView.Adapter<AdaptadorEstudiant
         final Estudiante estudiante = estudianteListFiltered.get(position);
         holder.titulo1.setText(estudiante.getIdP());
         holder.titulo2.setText(estudiante.getNombre());
-        holder.description.setText(estudiante.getApellidos() + " Créditos");
-        holder.profe.setText("   Curso asignado: "+estudiante.getCursosAsignados().getIdC() +" "+ estudiante.getCursosAsignados().getDescripcion());
+        holder.description.setText(estudiante.getApellidos());
+        //holder.profe.setText("   Curso asignado: "+estudiante.getCursosAsignados().get(0).getIdC() +" "+ estudiante.getCursosAsignados().get(0).getDescripcion());
     }
 
     @Override

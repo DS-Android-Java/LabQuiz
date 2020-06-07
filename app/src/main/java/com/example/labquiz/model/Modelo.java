@@ -1,5 +1,6 @@
 package com.example.labquiz.model;
 
+import android.content.ContentValues;
 import android.content.Context;
 
 import com.example.labquiz.accesodatos.ServicioCurso;
@@ -37,6 +38,15 @@ public class Modelo {
         misEstudiantes = miSE.listaEstudiantes(context);
         return misEstudiantes;
     }
+
+    public boolean insertEstudiante(Estudiante miEst, String codCurso, Context context){
+        return miSE.insertEstudiante(miEst,codCurso, context);
+    }
+
+    public int deleteEstudiante(String idEst, Context context){
+        return miSE.deleteEstudiante(idEst,context);
+    }
+
     public ArrayList<Curso> listCurso(Context context){
         misCursos = miSC.listarCurso(context);
         return  misCursos;

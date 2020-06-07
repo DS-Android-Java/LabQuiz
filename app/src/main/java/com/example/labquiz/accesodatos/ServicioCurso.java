@@ -45,7 +45,7 @@ public class ServicioCurso {
         try{
             switch (op){
                 case 1: //Listar cursos
-                    BaseDatos conexion = new BaseDatos(context, "bdLab10", null,1);//Aca se abre la conexion
+                    BaseDatos conexion = new BaseDatos(context);//Aca se abre la conexion
                     db = conexion.getWritableDatabase();
                     Cursor fila = db.rawQuery("select * from Cursos;", null);
                     while(fila.moveToNext()) {
@@ -53,7 +53,6 @@ public class ServicioCurso {
                         curso.setIdC(fila.getString(0));
                         curso.setDescripcion(fila.getString(1));
                         curso.setCreditos(fila.getString(2));
-
 
                         misCursos.add(curso);
                     }
@@ -71,6 +70,4 @@ public class ServicioCurso {
     public  void close(){
         db.close();
     }
-
-
 }

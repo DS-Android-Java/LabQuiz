@@ -68,10 +68,10 @@ public class MainActivity extends AppCompatActivity
         //toolbar fancy stuff
         getSupportActionBar().setTitle(getString(R.string.my_curso));
 
-        model = Modelo.getIntance();
+        model = Modelo.getIntance(this);
         mRecyclerView = findViewById(R.id.recycler_estudiantesFld);
         estudianteList = new ArrayList<>();
-        estudianteList = model.listEstudiantes(this);//Aca se cargan los estudiantes de la base
+        estudianteList = model.listEstudiantes();//Aca se cargan los estudiantes de la base
         mAdapter = new AdaptadorEstudiante(estudianteList, this);
         coordinatorLayout = findViewById(R.id.coordinator_layoutC);
 
@@ -109,34 +109,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getMenuInflater();
-
-        int id=v.getId();
-        switch (id){
-            case R.id.recycler_estudiantesFld:
-                inflater.inflate(R.menu.menu_contextual_est,menu);
-                break;
-        }
-    }
-
-    @Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-        switch (item.getItemId()){
-            case R.id.actionConsulta:
-                Toast.makeText(this,"Elemento seleccionado: "+ info.position+ item.getTitle(),Toast.LENGTH_LONG).show();
-                return true;
-            case R.id.actionAsignar:
-                Toast.makeText(this,"Asignar",Toast.LENGTH_LONG).show();
-                return true;
-            default:
-                return super.onContextItemSelected(item);
-        }
-    }
-
-    @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
         if (direction == ItemTouchHelper.START) {
             if (viewHolder instanceof AdaptadorEstudiante.MyViewHolder) {
@@ -146,7 +118,7 @@ public class MainActivity extends AppCompatActivity
                 // save the index deleted
                 final int deletedIndex = viewHolder.getAdapterPosition();
                 //remove from the database
-                int result = model.deleteEstudiante(idEst,this);
+                int result = model.deleteEstudiante(idEst);
                 if(result > 0){
                     Toast.makeText(this,"Estudiante removido exitosamente!!!" ,Toast.LENGTH_LONG).show();
                     // remove the item from recyclerView
@@ -227,7 +199,7 @@ public class MainActivity extends AppCompatActivity
             flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
             view.setSystemUiVisibility(flags);
             getWindow().setStatusBarColor(Color.WHITE);
-        }
+        } 
     }
 
     @Override
@@ -249,8 +221,11 @@ public class MainActivity extends AppCompatActivity
 
                 }
             } else {//Accion de agregar
-                if(model.insertEstudiante(aux,aux.getCursosAsignados().get(0).getIdC(),this)){
-                    estudianteList.add(aux);
+                if(model.insertEstudiante(aux,aux.getCursosAsignados().get(0).getIdC())){
+                    estudianteList = model.listEstudiantes();//Se refrescan los estudiantes con el nuevo agregado
+                    mAdapter = new AdaptadorEstudiante(estudianteList,this);
+                    mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
                     Toast.makeText(this,"Estudiante agregado exitosamente!!",Toast.LENGTH_LONG).show();
                 }else{
                     Toast.makeText(this,"Error al agregar el estudiante!!!",Toast.LENGTH_LONG).show();

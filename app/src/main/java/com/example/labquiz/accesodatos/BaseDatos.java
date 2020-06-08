@@ -10,9 +10,6 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.example.labquiz.logicaNegocio.Estudiante;
-
-import java.util.ArrayList;
 
 public class BaseDatos extends SQLiteOpenHelper {
 

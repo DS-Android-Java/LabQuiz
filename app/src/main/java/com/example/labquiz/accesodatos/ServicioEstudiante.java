@@ -11,45 +11,28 @@ import com.example.labquiz.logicaNegocio.Estudiante;
 import java.util.ArrayList;
 
 public class ServicioEstudiante {
-
-    final static String path = "/data/data/cis493.sqldatabases/bdLab10";
     private SQLiteDatabase db;
+    private BaseDatos conexion;
     ArrayList<Estudiante> misEstudiantes;
-    public ServicioEstudiante() {
+    public ServicioEstudiante(Context context)
+    {
         misEstudiantes = new ArrayList<>();
+        conexion = new BaseDatos(context);
     }
 
-    public ArrayList<Estudiante> listaEstudiantes(Context context){
-        misEstudiantes = transactionShowInfo(1, context);
+    public ArrayList<Estudiante> listaEstudiantes(){
+        misEstudiantes = transactionShowInfo(1);
         return  misEstudiantes;
     }
 
-    public ArrayList<Estudiante> consultaEstudiantes(Context context){
-        misEstudiantes = transactionShowInfo(1, context);
-        return  misEstudiantes;
-    }
-
-    public void open(String path) {
-        try {
-            db = SQLiteDatabase.openDatabase(
-                    path,
-                    null,
-                    SQLiteDatabase.CREATE_IF_NECESSARY);
-        } catch (SQLiteException e) {
-            // Toast.makeText(this, e.getMessage(), 1).show();
-        }
-    }
-
-    private ArrayList<Estudiante> transactionShowInfo(int op, Context context) {
+    private ArrayList<Estudiante> transactionShowInfo(int op) {
         Estudiante miEst;
         ArrayList<Estudiante> miEsts = new ArrayList<>();
 
         try {
             switch (op){
                 case 1://Listar estudiantes
-                    BaseDatos conn = new BaseDatos(context);//Aca se abre la conexion
-                    db = conn.getWritableDatabase();
-
+                    db = conexion.getReadableDatabase();
                     //Primero se saca el idSemana de la semana en curso
                     Cursor fila = db.rawQuery("select * from Estudiante;", null);
                     while(fila.moveToNext()) {
@@ -61,7 +44,7 @@ public class ServicioEstudiante {
 
                         miEsts.add(miEst);
                     }
-                    conn.close();//Aca se cierra
+                    //close();//Aca se cierra
                     break;
             }
             //perform your database operations here ... Se debería hacer un switch
@@ -70,15 +53,15 @@ public class ServicioEstudiante {
             //report problem
         } finally {
             //db.endTransaction();
-            //close();
+            close();
         }
 
         return miEsts;
     }
 
-    public boolean insertEstudiante(Estudiante miEst, String codCurso, Context context){
-        BaseDatos conn = new BaseDatos(context);//Aca se abre la conexion
-        db = conn.getWritableDatabase();
+    public boolean insertEstudiante(Estudiante miEst, String codCurso){
+        //BaseDatos conn = new BaseDatos(context);//Aca se abre la conexion
+        db = conexion.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("id",miEst.getIdP());
         contentValues.put("nombre",miEst.getNombre());
@@ -91,7 +74,7 @@ public class ServicioEstudiante {
         //Se ralizan las inserciones en la base
         long resultado = db.insert("estudiante",null,contentValues);//Se inserta el estudiante
         long resultado2 = db.insert("asignacion",null,contentValues1);//Se inserta la asignacion
-        db.close();
+        close();
         if(resultado == -1 || resultado2 == -1){//Es error
             return false;
         }else {
@@ -99,14 +82,22 @@ public class ServicioEstudiante {
         }
     }
 
-    public int deleteEstudiante(String idEst, Context context){
-        BaseDatos conn = new BaseDatos(context);//Aca se abre la conexion
-        db = conn.getWritableDatabase();
+    public int deleteEstudiante(String idEst){
+        //BaseDatos conn = new BaseDatos(context);//Aca se abre la conexion
+        db = conexion.getWritableDatabase();
         db.delete("asignacion","fk_id_e=?", new String[] {idEst});
         int resultado =  db.delete("estudiante","id=?", new String[] {idEst});
-        conn.close();
+        close();
         return resultado;
     }
+
+    public int deleteAsignacion(String idEst, String idCurso){
+        db = conexion.getWritableDatabase();
+        int resultado = db.delete("asignacion","fk_id_e=? and fk_id_c=?", new String[] {idEst,idCurso});
+        close();
+        return resultado;
+    }
+
     public void close(){
         db.close();
     }

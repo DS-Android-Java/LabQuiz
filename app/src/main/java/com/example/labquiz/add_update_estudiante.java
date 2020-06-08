@@ -66,13 +66,12 @@ public class add_update_estudiante extends AppCompatActivity {
         etCreditos.setText("");
         etHorasSemanales.setText("");
 
-        model = Modelo.getIntance();
+        model = Modelo.getIntance(this);
 
         //Cargado spinners o combos
         spinnerCurso = findViewById(R.id.spinnerCurso);
         cursos = new ArrayList<>();
-        cursos = model.listCurso(this);
-
+        cursos = model.listCurso();
         adaptadorC = new ArrayAdapter<Curso>(this, R.layout.spinner_curso,cursos);
         spinnerCurso.setAdapter(adaptadorC);
       ////////////////////

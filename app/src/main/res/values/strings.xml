@@ -11,12 +11,12 @@
     <string name="my_curso">Estudiantes</string>
     <string name="my_profesor">Profesores</string>
 
-    <string name="labelACurso">Datos de Curso</string>
+    <string name="labelACurso">Datos de Estudiante</string>
     <string name="labelAProfesor">Datos de Profesor</string>
 
     <string name="edit">Editar</string>
     <string name="delete">Eliminar</string>
-    <string name="actionConsulta">Consultar Cursos asignados</string>
+    <string name="actionConsulta">Retirar Curso asignado</string>
     <string name="actionAsignar">Asignar Cursos</string>
 
     <!--Formulario Update Curso-->

@@ -11,42 +11,27 @@ import com.example.labquiz.logicaNegocio.Curso;
 import java.util.ArrayList;
 
 public class ServicioCurso {
-    final static String path = "/data/data/cis493.sqldatabases/bdLab10";
     private SQLiteDatabase db;
+    private BaseDatos conexion;
 
-    public ServicioCurso() {
+    public ServicioCurso(Context context) {
+        conexion = new BaseDatos(context);
     }
 
-    public ArrayList<Curso> listarCurso(Context context){
-        ArrayList<Curso> misCursos =  new ArrayList<>();
-        misCursos = transactionShowInfoCurso(1, context);
+    public ArrayList<Curso> listarCurso(){
+        ArrayList<Curso> misCursos = new ArrayList<>();
+        misCursos = transactionShowInfoCurso(1);
         return misCursos;
     }
 
-    public ArrayList<Curso> consultaCurso(Context context){
-        ArrayList<Curso> misCursos =  new ArrayList<>();
-        misCursos = transactionShowInfoCurso(1, context);
-        return misCursos;
-    }
-    public void open(String path){
-        try {
-            db = SQLiteDatabase.openDatabase(
-                    path,
-                    null,
-                    SQLiteDatabase.CREATE_IF_NECESSARY);
-        } catch (SQLiteException e) {
-            // Toast.makeText(this, e.getMessage(), 1).show();
-        }
-    }
-    private  ArrayList<Curso> transactionShowInfoCurso(int op, Context context) {
+    private  ArrayList<Curso> transactionShowInfoCurso(int op) {
         ArrayList<Curso> misCursos = new ArrayList<>();
         Curso curso;
 
         try{
             switch (op){
                 case 1: //Listar cursos
-                    BaseDatos conexion = new BaseDatos(context);//Aca se abre la conexion
-                    db = conexion.getWritableDatabase();
+                    db = conexion.getReadableDatabase();
                     Cursor fila = db.rawQuery("select * from Cursos;", null);
                     while(fila.moveToNext()) {
                         curso = new Curso();
@@ -56,7 +41,7 @@ public class ServicioCurso {
 
                         misCursos.add(curso);
                     }
-                    conexion.close();//Aca se cierra
+                    close();//Aca se cierra
                     break;
             }
         }catch (SQLException e){
@@ -67,10 +52,9 @@ public class ServicioCurso {
         return misCursos;
     }
 
-    public ArrayList<Curso> listCursoByEstudent(Context context,String id){
+    public ArrayList<Curso> listCursoByEstudent(String id){
         ArrayList<Curso>misC = new ArrayList<>();
-        BaseDatos conexion = new BaseDatos(context);//Aca se abre la conexion
-        db = conexion.getWritableDatabase();
+        db = conexion.getReadableDatabase();
         Curso curso;
 
         Cursor fila = db.rawQuery("select id_c,descripcion,creditos from Cursos C " +
@@ -86,7 +70,7 @@ public class ServicioCurso {
 
             misC.add(curso);
         }
-        conexion.close();//Aca se cierra
+        close();//Aca se cierra
         return misC;
     }
 

@@ -19,40 +19,44 @@ public class Modelo {
 
     private static Modelo mModelo;
 
-    private Modelo() {
+    private Modelo(Context context) {
         this.misEstudiantes = new ArrayList<>();
-        this.miSE = new ServicioEstudiante();
         this.misCursos = new ArrayList<>();
-        this.miSC = new ServicioCurso();
+        this.miSE = new ServicioEstudiante(context);
+        this.miSC = new ServicioCurso(context);
     }
 
 
-    public static Modelo getIntance() {
+    public static Modelo getIntance(Context context) {
         if(mModelo == null){
-            mModelo = new Modelo();
+            mModelo = new Modelo(context);
         }
         return mModelo;
     }
 
-    public ArrayList<Estudiante> listEstudiantes(Context context){
-        misEstudiantes = miSE.listaEstudiantes(context);
+    public ArrayList<Estudiante> listEstudiantes(){
+        misEstudiantes = miSE.listaEstudiantes();
         return misEstudiantes;
     }
 
-    public boolean insertEstudiante(Estudiante miEst, String codCurso, Context context){
-        return miSE.insertEstudiante(miEst,codCurso, context);
+    public boolean insertEstudiante(Estudiante miEst, String codCurso){
+        return miSE.insertEstudiante(miEst,codCurso);
     }
 
-    public int deleteEstudiante(String idEst, Context context){
-        return miSE.deleteEstudiante(idEst,context);
+    public int deleteEstudiante(String idEst){
+        return miSE.deleteEstudiante(idEst);
     }
 
-    public ArrayList<Curso> listCursoByEstudent(Context context,String id){
-        return miSC.listCursoByEstudent(context,id);
+    public int deleteAsignacion( String idEst,String idCurso){
+        return miSE.deleteAsignacion(idEst,idCurso);
     }
 
-    public ArrayList<Curso> listCurso(Context context){
-        misCursos = miSC.listarCurso(context);
+    public ArrayList<Curso> listCursoByEstudent(String id){
+        return miSC.listCursoByEstudent(id);
+    }
+
+    public ArrayList<Curso> listCurso(){
+        misCursos = miSC.listarCurso();
         return  misCursos;
     }
 }

@@ -126,7 +126,7 @@ public class add_update_estudiante extends AppCompatActivity {
             error++;
         }
         if (TextUtils.isEmpty(this.etCodigo.getText())) {
-            etCodigo.setError("Cedula requerida");
+            etCodigo.setError("Cédula requerida");
             error++;
         }
         if (TextUtils.isEmpty(this.etCreditos.getText())) {

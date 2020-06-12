@@ -56,7 +56,7 @@ public class ListCursosAsignados extends AppCompatActivity {
         aux = (Estudiante) getIntent().getSerializableExtra("idEstudiante");
         miCursos = model.listCursoByEstudent(aux.getIdP());
         textInfo.setText("Nombre: " + aux.getNombre() + " " + aux.getApellidos() + "\n"
-                + "Id: " + aux.getIdP() + "\n"
+                + "Ced: " + aux.getIdP() + "\n"
                 + "Edad: " + aux.getEdad());
 
         adapter = new ArrayAdapter<Curso>(this, R.layout.list_item_cursos, miCursos);

@@ -131,9 +131,8 @@ public class MainActivity extends AppCompatActivity
             //If is editing a row object
             Estudiante aux = mAdapter.getSwipedItem(viewHolder.getAdapterPosition());
             //send data to Edit Activity
-            Intent intent = new Intent(this, add_update_estudiante.class);
-            intent.putExtra("editable", true);
-            intent.putExtra("estudiante", aux);//Se pasa el objeto curso desde la lista de cursos
+            Intent intent = new Intent(this, updateEstudiante.class);
+            intent.putExtra("estudianteU", aux);//Se pasa el objeto curso desde la lista de cursos
             mAdapter.notifyDataSetChanged(); //restart left swipe view
             startActivity(intent);
         }
@@ -218,7 +217,15 @@ public class MainActivity extends AppCompatActivity
             if (aux == null) {
                 aux = (Estudiante) getIntent().getSerializableExtra("editEstudiante");
                 if (aux != null) {//Accion de actualizar
-
+                    if(model.updateEstudiante(aux)){
+                        estudianteList = model.listEstudiantes();//Se refrescan los estudiantes con el nuevo agregado
+                        mAdapter = new AdaptadorEstudiante(estudianteList,this);
+                        mRecyclerView.setAdapter(mAdapter);
+                        mAdapter.notifyDataSetChanged();
+                        Toast.makeText(this,"Estudiante actualizado exitosamente!!",Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(this,"Error al actualizar el estudiante!!!",Toast.LENGTH_LONG).show();
+                    }
                 }
             } else {//Accion de agregar
                 if(model.insertEstudiante(aux,aux.getCursosAsignados().get(0).getIdC())){

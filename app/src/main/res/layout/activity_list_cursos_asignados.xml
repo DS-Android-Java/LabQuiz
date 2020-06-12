@@ -7,12 +7,18 @@
     android:orientation="vertical"
     tools:context=".ListCursosAsignados">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/colorPrimaryDark">
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Información del Estudiante"
         android:textSize="25dp"
+        android:textColor="#fff"
         android:padding="20dp"/>
     <TextView
         android:id="@+id/textInfo"
@@ -20,11 +26,36 @@
         android:layout_height="wrap_content"
         android:text=""
         android:textSize="20sp"
+        android:textColor="#fff"
         android:padding="10dp"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tAsig"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Asignar Curso"
+        android:textSize="15sp"
+        android:padding="10dp"/>
+    <Spinner
+        android:id="@+id/spinnerCurso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addCursoBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_check"
+        android:tint="@android:color/background_light"
+        app:backgroundTint="@color/bg_row_background"
+        tools:layout_editor_absoluteX="319dp"
+        tools:layout_editor_absoluteY="547dp" />
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/list_cursos">
     </ListView>
+
 </LinearLayout>

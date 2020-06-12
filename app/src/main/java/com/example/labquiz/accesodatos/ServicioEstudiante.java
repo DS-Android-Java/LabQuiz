@@ -73,9 +73,29 @@ public class ServicioEstudiante {
         contentValues1.put("fk_id_c",miEst.getCursosAsignados().get(0).getIdC());
         //Se ralizan las inserciones en la base
         long resultado = db.insert("estudiante",null,contentValues);//Se inserta el estudiante
+        //boolean r = insertAsignacion(miEst.getIdP(),codCurso);
         long resultado2 = db.insert("asignacion",null,contentValues1);//Se inserta la asignacion
         close();
-        if(resultado == -1 || resultado2 == -1){//Es error
+        if(resultado == -1 || resultado2 == -1){// r == false){//Es error
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    public boolean updateEstudiante(Estudiante miEst){
+        //BaseDatos conn = new BaseDatos(context);//Aca se abre la conexion
+        db = conexion.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("id",miEst.getIdP());
+        contentValues.put("nombre",miEst.getNombre());
+        contentValues.put("apellidos",miEst.getApellidos());
+        contentValues.put("edad",miEst.getEdad());
+
+        //Se ralizan las inserciones en la base
+        long resultado = db.update("estudiante",contentValues,"id=?", new String[]{miEst.getIdP()});//Se inserta el estudiante
+        close();
+        if(resultado == -1){//Es error
             return false;
         }else {
             return true;
@@ -96,6 +116,21 @@ public class ServicioEstudiante {
         int resultado = db.delete("asignacion","fk_id_e=? and fk_id_c=?", new String[] {idEst,idCurso});
         close();
         return resultado;
+    }
+
+    public boolean insertAsignacion(String idEst, String idCurso){
+        db = conexion.getWritableDatabase();
+        //Se cargan los datos en el content para la insercion
+        ContentValues contentValues1 = new ContentValues();
+        contentValues1.put("fk_id_e",idEst);
+        contentValues1.put("fk_id_c",idCurso);
+        long resultado = db.insert("asignacion",null,contentValues1);//Se inserta la asignacion
+        close();
+        if(resultado == -1){//Es error
+            return false;
+        }else {
+            return true;
+        }
     }
 
     public void close(){

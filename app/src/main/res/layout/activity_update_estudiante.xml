@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".add_update_estudiante">
+    tools:context=".updateEstudiante">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,15 +28,15 @@
             android:background="@color/colorPrimaryDark">
 
             <TextView
-            android:id="@+id/labelACurso"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/labelACurso"
-            android:textSize="18sp"
+                android:id="@+id/labelACurso"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/labelACurso"
+                android:textSize="18sp"
                 android:layout_marginLeft="6dp"
                 android:layout_marginTop="10dp"
                 android:textColor="#fff"
-            android:textStyle="normal|bold" />
+                android:textStyle="normal|bold" />
 
             <ImageView
                 android:id="@+id/imageView2"
@@ -48,12 +48,12 @@
         </LinearLayout>
 
         <EditText
-            android:id="@+id/etCodigo"
+            android:id="@+id/etCedU"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="28dp"
             android:ems="10"
             android:hint="@string/etCodigo"
             android:inputType="number"
@@ -61,7 +61,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvTituloUpdateCurso" />
 
         <EditText
-            android:id="@+id/etNombre"
+            android:id="@+id/etNombreU"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
@@ -74,7 +74,7 @@
             app:layout_constraintTop_toBottomOf="@+id/etCodigo" />
 
         <EditText
-            android:id="@+id/etCreditos"
+            android:id="@+id/etApellidosU"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
@@ -88,7 +88,7 @@
 
 
         <EditText
-            android:id="@+id/etHorasSemanales"
+            android:id="@+id/etEdadU"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
@@ -100,14 +100,9 @@
             app:layout_constraintStart_toEndOf="@+id/tvHorasSemanales"
             app:layout_constraintTop_toBottomOf="@+id/etCiclo" />
 
-        <Spinner
-            android:id="@+id/spinnerCurso"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/addUpdCursoBtn"
+            android:id="@+id/addEst"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"

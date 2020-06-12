@@ -47,8 +47,16 @@ public class Modelo {
         return miSE.deleteEstudiante(idEst);
     }
 
+    public boolean updateEstudiante(Estudiante miEst){
+        return miSE.updateEstudiante(miEst);
+    }
+
     public int deleteAsignacion( String idEst,String idCurso){
         return miSE.deleteAsignacion(idEst,idCurso);
+    }
+
+    public boolean insertAsignacion(String idEst, String idCurso){
+        return miSE.insertAsignacion(idEst,idCurso);
     }
 
     public ArrayList<Curso> listCursoByEstudent(String id){

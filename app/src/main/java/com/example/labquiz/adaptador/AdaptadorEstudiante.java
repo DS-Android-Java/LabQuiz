@@ -75,8 +75,8 @@ public class AdaptadorEstudiante extends RecyclerView.Adapter<AdaptadorEstudiant
         // rendering view
         final Estudiante estudiante = estudianteListFiltered.get(position);
         holder.titulo1.setText(estudiante.getIdP());
-        holder.titulo2.setText(estudiante.getNombre());
-        holder.description.setText(estudiante.getApellidos());
+        holder.titulo2.setText(estudiante.getNombre()+" "+estudiante.getApellidos());
+        holder.description.setText("Edad: "+estudiante.getEdad());
         //holder.profe.setText("   Curso asignado: "+estudiante.getCursosAsignados().get(0).getIdC() +" "+ estudiante.getCursosAsignados().get(0).getDescripcion());
     }
 

@@ -2,6 +2,7 @@ package com.example.labquiz.accesodatos;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseErrorHandler;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -18,22 +19,22 @@ public class ServicioCurso {
         conexion = new BaseDatos(context);
     }
 
-    public ArrayList<Curso> listarCurso(){
+    public ArrayList<Curso> listarCurso() {
         ArrayList<Curso> misCursos = new ArrayList<>();
         misCursos = transactionShowInfoCurso(1);
         return misCursos;
     }
 
-    private  ArrayList<Curso> transactionShowInfoCurso(int op) {
+    private ArrayList<Curso> transactionShowInfoCurso(int op) {
         ArrayList<Curso> misCursos = new ArrayList<>();
         Curso curso;
 
-        try{
-            switch (op){
+        try {
+            switch (op) {
                 case 1: //Listar cursos
                     db = conexion.getReadableDatabase();
                     Cursor fila = db.rawQuery("select * from Cursos;", null);
-                    while(fila.moveToNext()) {
+                    while (fila.moveToNext()) {
                         curso = new Curso();
                         curso.setIdC(fila.getString(0));
                         curso.setDescripcion(fila.getString(1));
@@ -44,37 +45,41 @@ public class ServicioCurso {
                     close();//Aca se cierra
                     break;
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             //problem
-        }finally {
+        } finally {
             //close
         }
         return misCursos;
     }
 
-    public ArrayList<Curso> listCursoByEstudent(String id){
-        ArrayList<Curso>misC = new ArrayList<>();
-        db = conexion.getReadableDatabase();
-        Curso curso;
+    public ArrayList<Curso> listCursoByEstudent(String id) {
+        ArrayList<Curso> misC = new ArrayList<>();
+        try {
+            db = conexion.getReadableDatabase();
+            Curso curso;
 
-        Cursor fila = db.rawQuery("select id_c,descripcion,creditos from Cursos C " +
-                "inner join Asignacion A ON C.id_c = A.fk_id_c " +
-                "inner join Estudiante E ON A.fk_id_e = E.id " +
-                "where E.id = '"+id+"';", null);
+            Cursor fila = db.rawQuery("select id_c,descripcion,creditos from Cursos C " +
+                    "inner join Asignacion A ON C.id_c = A.fk_id_c " +
+                    "inner join Estudiante E ON A.fk_id_e = E.id " +
+                    "where E.id = '" + id + "';", null);
 
-        while(fila.moveToNext()) {
-            curso = new Curso();
-            curso.setIdC(fila.getString(0));
-            curso.setDescripcion(fila.getString(1));
-            curso.setCreditos(fila.getString(2));
+            while (fila.moveToNext()) {
+                curso = new Curso();
+                curso.setIdC(fila.getString(0));
+                curso.setDescripcion(fila.getString(1));
+                curso.setCreditos(fila.getString(2));
 
-            misC.add(curso);
+                misC.add(curso);
+            }
+        } catch (SQLiteException e) {
+        } finally {
+            close();//Aca se cierra
         }
-        close();//Aca se cierra
         return misC;
     }
 
-    public  void close(){
+    public void close() {
         db.close();
     }
 }

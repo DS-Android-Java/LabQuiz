@@ -60,5 +60,4 @@ public class TabHostAdmin extends TabActivity {
             }
         });
     }
-
 }

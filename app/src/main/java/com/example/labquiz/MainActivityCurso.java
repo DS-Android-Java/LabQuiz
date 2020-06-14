@@ -52,7 +52,7 @@ public class MainActivityCurso extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         //toolbar fancy stuff
-        getSupportActionBar().setTitle(getString(R.string.my_curso));
+        getSupportActionBar().setTitle(getString(R.string.my_profesor));
 
         mRecyclerView = findViewById(R.id.recycler_cursosFld);
         cursoList = new ArrayList<>();
@@ -107,12 +107,13 @@ public class MainActivityCurso extends AppCompatActivity
                     Toast.makeText(this, "Curso removido exitosamente!!!", Toast.LENGTH_LONG).show();
                     mAdapter.removeItem(viewHolder.getAdapterPosition());
                 }else {
-                    Toast.makeText(this, "No se puede eliminar el curso!!!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "No se puede eliminar el curso por que hay estudiantes matriculados!!!", Toast.LENGTH_LONG).show();
                 }
                 }
                 } else{
             Curso aux = mAdapter.getSwipedItem(viewHolder.getAdapterPosition());
             Intent intent = new Intent(this, add_update_curso.class);
+            intent.putExtra("editable", true);
             intent.putExtra("curso", aux);
             mAdapter.notifyDataSetChanged();
             startActivity(intent);

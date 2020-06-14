@@ -9,7 +9,7 @@
     <string name="action_search">Buscar</string>
 
     <string name="my_curso">Estudiantes</string>
-    <string name="my_profesor">Profesores</string>
+    <string name="my_profesor">Cursos</string>
 
     <string name="labelACurso">Datos de Estudiante</string>
     <string name="labelAProfesor">Datos de Profesor</string>

@@ -8,6 +8,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
+import com.example.labquiz.logicaNegocio.Asignacion;
 import com.example.labquiz.logicaNegocio.Curso;
 
 import java.util.ArrayList;
@@ -24,6 +25,23 @@ public class ServicioCurso {
         ArrayList<Curso> misCursos = new ArrayList<>();
         misCursos = transactionShowInfoCurso(1);
         return misCursos;
+    }
+
+    public ArrayList<Asignacion> findAsignacion(String idCurso){
+        ArrayList<Asignacion> misAsignacion = new ArrayList<>();
+        Asignacion asignacion;
+        db = conexion.getReadableDatabase();
+        Cursor fila = db.rawQuery("select * from Asignacion where fk_id_c='"+idCurso+"';", null);
+        while (fila.moveToNext()) {
+            asignacion = new Asignacion();
+            asignacion.setIdE(fila.getString(0));
+            asignacion.setIdC(fila.getString(1));
+
+            misAsignacion.add(asignacion);
+        }
+        close();//Aca se cierra
+
+        return misAsignacion;
     }
 
     private ArrayList<Curso> transactionShowInfoCurso(int op) {

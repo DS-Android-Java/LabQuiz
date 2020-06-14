@@ -85,9 +85,17 @@ public class Modelo {
     public boolean insertCurso(Curso miCurso){
         return miSC.insertCurso(miCurso);
     }
+
     public int deleteCurso (String idCurso){
-        return  miSC.deleteCurso(idCurso);
+        int resultado = 0;
+        if(miSC.findAsignacion(idCurso).size()!=0){//Si encuentra que tiene un estudiante asignado no lo puede eliminar
+            resultado = -1;
+        }else{
+            resultado = miSC.deleteCurso(idCurso);
+        }
+        return resultado;
     }
+
     public  boolean updateCurso(Curso miCurso){
         return miSC.updateCurso(miCurso);
     }

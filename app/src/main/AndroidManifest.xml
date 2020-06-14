@@ -17,7 +17,12 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".TabHostAdmin"></activity>
-        <activity android:name=".add_update_curso" />
+        <activity
+            android:name=".MainActivityCurso"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".add_update_curso"
+            android:theme="@style/AppTheme.TemaPopup" />
         <activity
             android:name=".updateEstudiante"
             android:theme="@style/AppTheme.TemaPopup" />

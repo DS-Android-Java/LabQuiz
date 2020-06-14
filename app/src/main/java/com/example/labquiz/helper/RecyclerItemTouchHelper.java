@@ -11,6 +11,7 @@ import android.view.View;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.labquiz.adaptador.AdaptadorCurso;
 import com.example.labquiz.adaptador.AdaptadorEstudiante;
 
 public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
@@ -58,6 +59,10 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
                 backgroundViewEdit = ((AdaptadorEstudiante.MyViewHolder) viewHolder).viewBackgroundEdit;
                 backgroundViewDelete = ((AdaptadorEstudiante.MyViewHolder) viewHolder).viewBackgroundDelete;
                 foregroundView = ((AdaptadorEstudiante.MyViewHolder) viewHolder).viewForeground;
+            }else if(this.listener.getClass().getSimpleName().equals("MainActivityCurso")){
+                backgroundViewEdit = ((AdaptadorCurso.MyViewHolder) viewHolder).viewBackgroundEdit;
+                backgroundViewDelete = ((AdaptadorCurso.MyViewHolder) viewHolder).viewBackgroundDelete;
+                foregroundView = ((AdaptadorCurso.MyViewHolder) viewHolder).viewForeground;
             }
 
             //Selected item

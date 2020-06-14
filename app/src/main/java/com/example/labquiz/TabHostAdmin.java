@@ -30,11 +30,11 @@ public class TabHostAdmin extends TabActivity {
         tabHost.setup();
 
         //tab1
-        //TabHost.TabSpec spec = tabHost.newTabSpec("Cursos");
-        /*Intent intentM = new Intent(this,AnimalList.class);
-        spec.setContent(intentM);
-        spec.setIndicator("",getResources().getDrawable(R.drawable.estudiante));
-        tabHost.addTab(spec);*/
+        TabHost.TabSpec specC = tabHost.newTabSpec("Cursos");
+        Intent intentM = new Intent(this,MainActivityCurso.class);
+        specC.setContent(intentM);
+        specC.setIndicator("",getResources().getDrawable(R.drawable.curso));
+        tabHost.addTab(specC);
 
         //tab2
         TabHost.TabSpec spec = tabHost.newTabSpec("Estudantes");

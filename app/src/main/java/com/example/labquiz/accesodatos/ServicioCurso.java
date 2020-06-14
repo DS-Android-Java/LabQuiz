@@ -1,5 +1,6 @@
 package com.example.labquiz.accesodatos;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseErrorHandler;
@@ -51,6 +52,58 @@ public class ServicioCurso {
             //close
         }
         return misCursos;
+    }
+    public boolean insertCurso (Curso miCurso){
+        long resultado = 0;
+        try{
+            db = conexion.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("id_c", miCurso.getIdC());
+            contentValues.put("descripcion", miCurso.getDescripcion());
+            contentValues.put("creditos", miCurso.getCreditos());
+
+            resultado = db.insert("cursos", null, contentValues);
+        }catch (SQLiteException e) {
+        } finally {
+            close();
+        }
+        if (resultado == -1) {// r == false){//Es error
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean updateCurso(Curso miCurso){
+        long resultado= 0;
+        try{
+            db= conexion.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("id_c", miCurso.getIdC());
+            contentValues.put("descripcion", miCurso.getDescripcion());
+            contentValues.put("creditos", miCurso.getCreditos());
+
+            resultado=db.update("cursos", contentValues, "id_c=?", new String[]{miCurso.getIdC()});
+        }catch (SQLiteException e) {
+        } finally {
+            close();
+        }
+        if (resultado == -1) {//Es error
+            return false;
+        } else {
+            return true;
+        }
+    }
+    public int deleteCurso(String idCurso){
+        int resultado =0;
+        try{
+            db=conexion.getWritableDatabase();
+            db.delete("cursos", "id_c=?", new String[]{idCurso});
+        }catch (SQLiteException e) {
+        } finally {
+            close();
+        }
+        return resultado;
     }
 
     public ArrayList<Curso> listCursoByEstudent(String id) {

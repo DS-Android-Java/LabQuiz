@@ -16,8 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".updateEstudiante"
-            android:theme="@style/AppTheme.TemaPopup"></activity>
+        <activity android:name=".add_update_curso"></activity>
+        <activity
+            android:name=".updateEstudiante"
+            android:theme="@style/AppTheme.TemaPopup" />
         <activity
             android:name=".ListCursosAsignados"
             android:theme="@style/AppTheme.TemaPopup" />

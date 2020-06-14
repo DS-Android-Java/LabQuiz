@@ -67,4 +67,13 @@ public class Modelo {
         misCursos = miSC.listarCurso();
         return  misCursos;
     }
+    public boolean insertCurso(Curso miCurso){
+        return miSC.insertCurso(miCurso);
+    }
+    public int deleteCurso (String idCurso){
+        return  miSC.deleteCurso(idCurso);
+    }
+    public  boolean updateCurso(Curso miCurso){
+        return miSC.updateCurso(miCurso);
+    }
 }

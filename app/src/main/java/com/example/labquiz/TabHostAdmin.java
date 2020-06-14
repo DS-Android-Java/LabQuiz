@@ -32,14 +32,6 @@ public class TabHostAdmin extends TabActivity {
         spec.setIndicator("",getResources().getDrawable(R.drawable.estudiante));
         tabHost.addTab(spec);*/
 
-        /*Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            est = (Estudiante) getIntent().getSerializableExtra("addEstudiante");
-            if(est==null){
-                est = (Estudiante) getIntent().getSerializableExtra("editEstudiante");
-            }
-        }*/
-
         //tab2
         TabHost.TabSpec spec = tabHost.newTabSpec("Estudantes");
         Intent intent = new Intent(this, MainActivity.class);

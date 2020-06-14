@@ -77,6 +77,7 @@ public class ServicioEstudiante {
     public boolean insertEstudiante(Estudiante miEst, String codCurso) {
         long resultado = 0;
         long resultado2 = 0;
+        long resultado3 = 0;
         try {
             db = conexion.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
@@ -88,15 +89,22 @@ public class ServicioEstudiante {
             ContentValues contentValues1 = new ContentValues();
             contentValues1.put("fk_id_e", miEst.getIdP());
             contentValues1.put("fk_id_c", miEst.getCursosAsignados().get(0).getIdC());
+
+            ContentValues contentValues2 = new ContentValues();
+            contentValues2.put("idUsuario", miEst.getIdP());
+            contentValues2.put("clave", miEst.getIdP());
+            contentValues2.put("rol", "estudiante");
+
             //Se ralizan las inserciones en la base
             resultado = db.insert("estudiante", null, contentValues);//Se inserta el estudiante
             //boolean r = insertAsignacion(miEst.getIdP(),codCurso);
             resultado2 = db.insert("asignacion", null, contentValues1);//Se inserta la asignacion
+            resultado3 = db.insert("usuario", null, contentValues2);//Se inserta la asignacion
         } catch (SQLiteException e) {
         } finally {
             close();
         }
-        if (resultado == -1 || resultado2 == -1) {// r == false){//Es error
+        if (resultado == -1 || resultado2 == -1 || resultado3 == -1) {// r == false){//Es error
             return false;
         } else {
             return true;

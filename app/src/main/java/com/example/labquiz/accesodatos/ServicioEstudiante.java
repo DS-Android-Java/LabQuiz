@@ -21,11 +21,18 @@ public class ServicioEstudiante {
     }
 
     public ArrayList<Estudiante> listaEstudiantes() {
-        misEstudiantes = transactionShowInfo(1);
+        misEstudiantes = transactionShowInfo(1,"");
         return misEstudiantes;
     }
 
-    private ArrayList<Estudiante> transactionShowInfo(int op) {
+    public ArrayList<Estudiante> findEstudiante(String idEst) {
+        misEstudiantes = transactionShowInfo(2,idEst);
+        return misEstudiantes;
+    }
+
+
+
+    private ArrayList<Estudiante> transactionShowInfo(int op,String idEst) {
         Estudiante miEst;
         ArrayList<Estudiante> miEsts = new ArrayList<>();
         try {
@@ -40,6 +47,19 @@ public class ServicioEstudiante {
                         miEst.setNombre(fila.getString(1));
                         miEst.setApellidos(fila.getString(2));
                         miEst.setEdad(fila.getString(3));
+
+                        miEsts.add(miEst);
+                    }
+                    break;
+                case 2:
+                    db = conexion.getReadableDatabase();
+                    Cursor fila2 = db.rawQuery("select * from Estudiante where id ='"+idEst+"';", null);
+                    while (fila2.moveToNext()) {
+                        miEst = new Estudiante();
+                        miEst.setIdP(fila2.getString(0));
+                        miEst.setNombre(fila2.getString(1));
+                        miEst.setApellidos(fila2.getString(2));
+                        miEst.setEdad(fila2.getString(3));
 
                         miEsts.add(miEst);
                     }

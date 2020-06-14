@@ -42,6 +42,13 @@ public class BaseDatos extends SQLiteOpenHelper {
         db.execSQL("insert into Asignacion(fk_id_e, fk_id_c) values ('207830003','EIF205');");
         db.execSQL("insert into Asignacion(fk_id_e, fk_id_c) values ('207830003','EIF206');");
         db.execSQL("insert into Asignacion(fk_id_e, fk_id_c) values ('623929292','EIF205');");
+
+        db.execSQL("create table Usuario("
+                + "idUsuario text,"+"clave text,"+"rol text"+");");
+        db.execSQL("insert into Usuario(idUsuario, clave, rol) values ('207830003','hola123','estudiante');");
+        db.execSQL("insert into Usuario(idUsuario, clave, rol) values ('701190556','hola123','admin');");
+        db.execSQL("insert into Usuario(idUsuario, clave, rol) values ('623929292','hola123','estudiante');");
+        db.execSQL("insert into Usuario(idUsuario, clave, rol) values ('202700678','hola123','estudiante');");
     }
 
     @Override

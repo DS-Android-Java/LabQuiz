@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.labquiz">
+    package="com.example.labquiz" >
 
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
@@ -15,20 +15,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
-        <activity android:name=".add_update_curso"></activity>
+        android:usesCleartextTraffic="true" >
+        <activity android:name=".add_update_curso" />
         <activity
             android:name=".updateEstudiante"
             android:theme="@style/AppTheme.TemaPopup" />
         <activity
-            android:name=".ListCursosAsignados"
-            android:theme="@style/AppTheme.TemaPopup" />
+            android:name=".ListCursosAsignados" />
         <activity
             android:name=".add_update_estudiante"
             android:theme="@style/AppTheme.TemaPopup" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity android:name=".Login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

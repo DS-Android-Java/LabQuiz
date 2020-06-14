@@ -5,8 +5,10 @@ import android.content.Context;
 
 import com.example.labquiz.accesodatos.ServicioCurso;
 import com.example.labquiz.accesodatos.ServicioEstudiante;
+import com.example.labquiz.accesodatos.ServicioUsuario;
 import com.example.labquiz.logicaNegocio.Curso;
 import com.example.labquiz.logicaNegocio.Estudiante;
+import com.example.labquiz.logicaNegocio.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,18 +16,21 @@ import java.util.List;
 public class Modelo {
     private ServicioEstudiante miSE;
     private ServicioCurso miSC;
+    private ServicioUsuario miSU;
     private ArrayList<Estudiante> misEstudiantes;
-    private  ArrayList<Curso> misCursos;
+    private ArrayList<Curso> misCursos;
+    private ArrayList<Usuario> misUsuarios;
 
     private static Modelo mModelo;
 
     private Modelo(Context context) {
         this.misEstudiantes = new ArrayList<>();
         this.misCursos = new ArrayList<>();
+        this.misUsuarios = new ArrayList<>();
         this.miSE = new ServicioEstudiante(context);
         this.miSC = new ServicioCurso(context);
+        this.miSU = new ServicioUsuario(context);
     }
-
 
     public static Modelo getIntance(Context context) {
         if(mModelo == null){
@@ -34,8 +39,18 @@ public class Modelo {
         return mModelo;
     }
 
+    public ArrayList<Usuario> listaUsuarios() {
+        misUsuarios = miSU.listaUsuarios();
+        return misUsuarios;
+    }
+
     public ArrayList<Estudiante> listEstudiantes(){
         misEstudiantes = miSE.listaEstudiantes();
+        return misEstudiantes;
+    }
+
+    public ArrayList<Estudiante> findEstudiante(String idEst) {
+        misEstudiantes = miSE.findEstudiante(idEst);
         return misEstudiantes;
     }
 

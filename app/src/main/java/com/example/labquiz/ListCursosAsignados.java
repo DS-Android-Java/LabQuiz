@@ -3,6 +3,7 @@ package com.example.labquiz;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.ContextMenu;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.labquiz.logicaNegocio.Curso;
 import com.example.labquiz.logicaNegocio.Estudiante;
+import com.example.labquiz.logicaNegocio.Usuario;
 import com.example.labquiz.model.Modelo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -37,6 +39,7 @@ public class ListCursosAsignados extends AppCompatActivity {
     private ArrayAdapter<Curso> adapterC;
     private Spinner spinnerCurso;
     private FloatingActionButton addCursoBtn;
+    private Usuario miULogueado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +56,10 @@ public class ListCursosAsignados extends AppCompatActivity {
         spinnerCurso.setAdapter(adapterC);
 
         miCursos = new ArrayList<>();
-        aux = (Estudiante) getIntent().getSerializableExtra("idEstudiante");
+
+        //aux = (Estudiante) getIntent().getSerializableExtra("idEstudiante");
+        Usuario idEst = (Usuario) getIntent().getSerializableExtra("usuarioLogueado");
+        aux = model.findEstudiante(idEst.getIdUsuario()).get(0);
         miCursos = model.listCursoByEstudent(aux.getIdP());
         textInfo.setText("Nombre: " + aux.getNombre() + " " + aux.getApellidos() + "\n"
                 + "Ced: " + aux.getIdP() + "\n"
@@ -73,13 +79,13 @@ public class ListCursosAsignados extends AppCompatActivity {
         });
 
         //Aca se prepara el popup
-        DisplayMetrics medidasVentana = new DisplayMetrics();
+       /* DisplayMetrics medidasVentana = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(medidasVentana);
 
         int ancho = medidasVentana.widthPixels;
         int alto = medidasVentana.heightPixels;
 
-        getWindow().setLayout((int) (ancho * 0.90), (int) (alto * 0.90));
+        getWindow().setLayout((int) (ancho * 0.90), (int) (alto * 0.90));*/
     }
 
     public void AgregarAsignacion() {
@@ -141,5 +147,12 @@ public class ListCursosAsignados extends AppCompatActivity {
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(this,Login.class);
+        startActivity(i);
     }
 }

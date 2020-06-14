@@ -112,11 +112,12 @@ public class ServicioCurso {
             return true;
         }
     }
+
     public int deleteCurso(String idCurso){
         int resultado =0;
         try{
             db=conexion.getWritableDatabase();
-            db.delete("cursos", "id_c=?", new String[]{idCurso});
+            resultado = db.delete("cursos", "id_c=?", new String[]{idCurso});
         }catch (SQLiteException e) {
         } finally {
             close();

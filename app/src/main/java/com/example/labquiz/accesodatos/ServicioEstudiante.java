@@ -140,6 +140,7 @@ public class ServicioEstudiante {
             db = conexion.getWritableDatabase();
             db.delete("asignacion", "fk_id_e=?", new String[]{idEst});
             resultado = db.delete("estudiante", "id=?", new String[]{idEst});
+            db.delete("usuario", "idUsuario=?", new String[]{idEst});//Se elimina tambien el usuario
         } catch (SQLiteException e) {
         } finally {
             close();

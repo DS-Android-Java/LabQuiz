@@ -14,10 +14,22 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <Button
+            android:id="@+id/buttonSalir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:layout_gravity="right"
+            android:fontFamily="@font/coolveticarg"
+            android:background="@drawable/btn_add"
+            android:textColor="#fff"
+            android:text="Salir" />
+
         <TabWidget
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@android:id/tabs">
+            android:id="@android:id/tabs"
+            android:background="@color/colorPrimaryDark">
         </TabWidget>
 
         <FrameLayout
@@ -26,5 +38,6 @@
             android:id="@android:id/tabcontent"
             tools:ignore="Suspicious0dp">
         </FrameLayout>
+
     </LinearLayout>
 </TabHost>

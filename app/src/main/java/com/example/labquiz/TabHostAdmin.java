@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TabHost;
 import android.widget.Toast;
 
@@ -16,12 +18,14 @@ public class TabHostAdmin extends TabActivity {
     public TabHost tabHost;
     private Estudiante est;
     private Curso curs;
+    private Button buttonRegresar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_host_admin);
 
+        buttonRegresar = findViewById(R.id.buttonSalir);
         tabHost = findViewById(android.R.id.tabhost);
         tabHost.setup();
 
@@ -36,7 +40,7 @@ public class TabHostAdmin extends TabActivity {
         TabHost.TabSpec spec = tabHost.newTabSpec("Estudantes");
         Intent intent = new Intent(this, MainActivity.class);
         spec.setContent(intent);
-        spec.setIndicator("",getResources().getDrawable(R.drawable.estudiante));
+        spec.setIndicator("", getResources().getDrawable(R.drawable.estudiante));
         tabHost.addTab(spec);
 
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
@@ -46,13 +50,15 @@ public class TabHostAdmin extends TabActivity {
                 Toast.makeText(getApplicationContext(), tabId, Toast.LENGTH_SHORT).show();
             }
         });
+
+        buttonRegresar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), Login.class);
+                startActivity(i);
+                finish();
+            }
+        });
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent i = new Intent(this, Login.class);
-        startActivity(i);
-        finish();
-    }
 }

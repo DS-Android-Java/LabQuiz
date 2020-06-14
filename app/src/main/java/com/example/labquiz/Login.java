@@ -63,6 +63,9 @@ public class Login extends AppCompatActivity {
             } else {
                 if (userSingin.getRol().equals("admin")) {
                     ///Se dirige al nav drawer
+                    Intent iA = new Intent(this,TabHostAdmin.class);
+                    startActivity(iA);
+                    finish();
                 } else if (userSingin.getRol().equals("estudiante")) {
                     Intent i = new Intent(this, ListCursosAsignados.class);
                     i.putExtra("usuarioLogueado", userSingin);

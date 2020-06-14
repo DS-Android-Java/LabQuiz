@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToAddUpdCurso();
+                goToAddUpdEstudiante();
             }
         });
 
@@ -203,9 +203,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onContactSelected(Estudiante estudiante) { //TODO get the select item of recycleView
-        Intent intent = new Intent(this, ListCursosAsignados.class);
+        /*Intent intent = new Intent(this, ListCursosAsignados.class);
         intent.putExtra("idEstudiante", estudiante);
-        startActivity(intent);
+        startActivity(intent);*/
         Toast.makeText(getApplicationContext(), "Selected: " + estudiante.getIdP() + ", " + estudiante.getNombre(), Toast.LENGTH_LONG).show();
     }
 
@@ -223,6 +223,9 @@ public class MainActivity extends AppCompatActivity
                         mRecyclerView.setAdapter(mAdapter);
                         mAdapter.notifyDataSetChanged();
                         Toast.makeText(this,"Estudiante actualizado exitosamente!!",Toast.LENGTH_LONG).show();
+                        Intent i = new Intent(this,TabHostAdmin.class);
+                        startActivity(i);
+                        finish();
                     }else{
                         Toast.makeText(this,"Error al actualizar el estudiante!!!",Toast.LENGTH_LONG).show();
                     }
@@ -234,6 +237,9 @@ public class MainActivity extends AppCompatActivity
                     mRecyclerView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                     Toast.makeText(this,"Estudiante agregado exitosamente!!",Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(this,TabHostAdmin.class);
+                    startActivity(i);
+                    finish();
                 }else{
                     Toast.makeText(this,"Error al agregar el estudiante!!!",Toast.LENGTH_LONG).show();
                 }
@@ -241,7 +247,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void goToAddUpdCurso() {
+    private void goToAddUpdEstudiante() {
         Intent intent = new Intent(this, add_update_estudiante.class);
         intent.putExtra("editable", false);
         startActivity(intent);

@@ -56,8 +56,8 @@ public class MainActivityCurso extends AppCompatActivity
 
         mRecyclerView = findViewById(R.id.recycler_cursosFld);
         cursoList = new ArrayList<>();
-        model= Modelo.getIntance(this);
-        cursoList= model.listCurso();
+        model = Modelo.getIntance(this);
+        cursoList = model.listCurso();
         mAdapter = new AdaptadorCurso(cursoList, this);
         coordinatorLayout = findViewById(R.id.coordinator_layoutC);
 
@@ -102,15 +102,15 @@ public class MainActivityCurso extends AppCompatActivity
                 // save the index deleted
                 final int deletedIndex = viewHolder.getAdapterPosition();
                 // remove the item from recyclerView
-               int result = model.deleteCurso(idCurso);
+                int result = model.deleteCurso(idCurso);
                 if (result > 0) {
                     Toast.makeText(this, "Curso removido exitosamente!!!", Toast.LENGTH_LONG).show();
                     mAdapter.removeItem(viewHolder.getAdapterPosition());
-                }else {
+                } else {
                     Toast.makeText(this, "No se puede eliminar el curso por que hay estudiantes matriculados!!!", Toast.LENGTH_LONG).show();
                 }
-                }
-                } else{
+            }
+        } else {
             Curso aux = mAdapter.getSwipedItem(viewHolder.getAdapterPosition());
             Intent intent = new Intent(this, add_update_curso.class);
             intent.putExtra("editable", true);
@@ -194,21 +194,21 @@ public class MainActivityCurso extends AppCompatActivity
             if (aux == null) {
                 aux = (Curso) getIntent().getSerializableExtra("editCurso");
                 if (aux != null) {
-                if(model.updateCurso(aux)){
-                cursoList= model.listCurso();
-                mAdapter = new AdaptadorCurso(cursoList, this);
-                mRecyclerView.setAdapter(mAdapter);
-                mAdapter.notifyDataSetChanged();
-                Toast.makeText(this, "Curso actualizado exitosamente!!", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(this, TabHostAdmin.class);
-                startActivity(intent);
-                finish();
-                }else {
-                    Toast.makeText(this, "Error al actualizar el curso", Toast.LENGTH_LONG).show();
+                    if (model.updateCurso(aux)) {
+                        cursoList = model.listCurso();
+                        mAdapter = new AdaptadorCurso(cursoList, this);
+                        mRecyclerView.setAdapter(mAdapter);
+                        mAdapter.notifyDataSetChanged();
+                        Toast.makeText(this, "Curso actualizado exitosamente!!", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(this, TabHostAdmin.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(this, "Error al actualizar el curso", Toast.LENGTH_LONG).show();
+                    }
                 }
-                }
-                }else{
-                if(model.insertCurso(aux)){
+            } else {
+                if (model.insertCurso(aux)) {
                     cursoList = model.listCurso();
                     mAdapter = new AdaptadorCurso(cursoList, this);
                     mRecyclerView.setAdapter(mAdapter);
@@ -217,7 +217,7 @@ public class MainActivityCurso extends AppCompatActivity
                     Intent intent = new Intent(this, TabHostAdmin.class);
                     startActivity(intent);
                     finish();
-                }else{
+                } else {
                     Toast.makeText(this, "Error al agregar  el curso!!", Toast.LENGTH_LONG).show();
                 }
             }

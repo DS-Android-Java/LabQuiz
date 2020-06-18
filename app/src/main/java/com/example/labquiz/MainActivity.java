@@ -231,7 +231,20 @@ public class MainActivity extends AppCompatActivity
                     }
                 }
             } else {//Accion de agregar
-                if(model.insertEstudiante(aux,aux.getCursosAsignados().get(0).getIdC())){
+                ArrayList<Estudiante> misEsts = model.listEstudiantes();
+                boolean encontrado = false;
+                for(Estudiante e : misEsts){
+                    if(e.getIdP().equals(aux.getIdP())){
+                        encontrado = true;
+                    }
+                }
+                if(encontrado){
+                    Toast.makeText(this,"No se puedo insertar el estudiante porque se encuentro un estudiante con esa identificación",Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(this,TabHostAdmin.class);
+                    startActivity(i);
+                    finish();
+                }else{
+                    if(model.insertEstudiante(aux,aux.getCursosAsignados().get(0).getIdC())){
                     estudianteList = model.listEstudiantes();//Se refrescan los estudiantes con el nuevo agregado
                     mAdapter = new AdaptadorEstudiante(estudianteList,this);
                     mRecyclerView.setAdapter(mAdapter);
@@ -243,6 +256,7 @@ public class MainActivity extends AppCompatActivity
                 }else{
                     Toast.makeText(this,"Error al agregar el estudiante!!!",Toast.LENGTH_LONG).show();
                 }
+            }
             }
         }
     }

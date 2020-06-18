@@ -21,14 +21,14 @@ public class BaseDatos extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {//Aca se crea la base
         db.execSQL("create table Estudiante("
-                +" id text,"+"nombre text,"+"apellidos text,"+"edad text );");
+                +" id text PRIMARY KEY,"+"nombre text,"+"apellidos text,"+"edad text );");
         //Se insertan unos valores para probar
         db.execSQL( "insert into Estudiante(id, nombre, apellidos,edad) values ('207830003', 'Diego','Salazar Perez','21');" );
         db.execSQL( "insert into Estudiante(id, nombre, apellidos,edad) values ('623929292', 'Allison','Madriz Valverde', '25');" );
         db.execSQL( "insert into Estudiante(id, nombre, apellidos,edad) values ('202700678', 'Vanessa','Perez Cruz','43' );" );
 
         db.execSQL("create table Cursos("
-            +"id_c text,"+"descripcion text," +"creditos text);");
+            +"id_c text PRIMARY KEY,"+"descripcion text," +"creditos text);");
 
         db.execSQL("insert into Cursos(id_c, descripcion,creditos) values ('EIF204','Dispositivos Moviles','8');" );
         db.execSQL("insert into Cursos(id_c, descripcion,creditos) values ('EIF205','Bases de Datos','4');" );
@@ -44,7 +44,7 @@ public class BaseDatos extends SQLiteOpenHelper {
         db.execSQL("insert into Asignacion(fk_id_e, fk_id_c) values ('623929292','EIF205');");
 
         db.execSQL("create table Usuario("
-                + "idUsuario text,"+"clave text,"+"rol text"+");");
+                + "idUsuario text PRIMARY KEY,"+"clave text,"+"rol text"+");");
         db.execSQL("insert into Usuario(idUsuario, clave, rol) values ('207830003','hola123','estudiante');");
         db.execSQL("insert into Usuario(idUsuario, clave, rol) values ('701190556','hola123','admin');");
         db.execSQL("insert into Usuario(idUsuario, clave, rol) values ('623929292','hola123','estudiante');");
